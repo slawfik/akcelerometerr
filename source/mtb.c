@@ -1,4 +1,6 @@
 /*
+*
+*Sakra funguj!!
  * Copyright 2016-2018 NXP
  * All rights reserved.
  *
