@@ -29,69 +29,60 @@
  */
  
 /**
- * @file    MKL25Z128xxx4_Project_Akcelerometer.cpp
+ * @file    ULOHA.cpp
  * @brief   Application entry point.
  */
-#include <stdio.h>
-#include "MMA8451Q/MMA8451Q.h"
-//#include "MMA8451Q/MMA8451Q.h"
 #include "board.h"
 #include "peripherals.h"
 #include "pin_mux.h"
 #include "clock_config.h"
-#include "MKL25Z4.h"
 #include "fsl_debug_console.h"
-#include "fsl_i2c.h"
-
-/* TODO: insert other include files here. */
-
-/* TODO: insert other definitions and declarations here. */
+#include "MMA8451Q.h"
 
 /*
  * @brief   Application entry point.
  */
+
 int main(void) {
 
   	/* Init board hardware. */
-   BOARD_InitBootPins();
+    BOARD_InitBootPins();
     BOARD_InitBootClocks();
     BOARD_InitBootPeripherals();
   	/* Init FSL debug console. */
     BOARD_InitDebugConsole();
- //   PRINTF("Hello World%d\n",BUS_CLK);
-    PRINTF("Hello World\n");
-        /* Enter an infinite loop, just incrementing a counter. */
-       // while(1) {
 
-       // }
-    LED_BLUE_INIT(kGPIO_DigitalOutput);
-    LED_GREEN_INIT(kGPIO_DigitalOutput);
-    LED_RED_INIT(kGPIO_DigitalOutput);
-
-
+    float a = 0.6;
     MMA8451Q acc(0x1d);
-    float a;
-    //float a= acc.getAccX();
+    a = acc.getAccX();
+    PRINTF("Hello World tu je X=%d\n",(int)(a*100));
 
     /* Force the counter to be placed into memory. */
-    volatile static int i = 0;
+    volatile static int i = 0 ;
     /* Enter an infinite loop, just incrementing a counter. */
     while(1) {
-    	a= acc.getAccX();
-    	PRINTF("x=%d\n\r",a);
-    	//LED_GREEN_TOGGLE();
-    	//for( uint32_t a = 0x100000; a>0 ;a-- ) {
-    	//}
-    	a= acc.getAccY();
-    	PRINTF("y=%d\n\r",a);
-    	//LED_GREEN_TOGGLE();
-    	//for( uint32_t a = 0x100000; a>0 ;a-- ) {
-    	//}
-    	a= acc.getAccZ();
-    	PRINTF("z=%d\n\r\n\r",a);
-    	LED_GREEN_TOGGLE();
-    	for( uint32_t a = 0x250000; a>0 ;a-- ) {
-    	}
+    	i++;
     }
     return 0 ;
 }
+
+/*
+#include "mbed.h"
+ #include "MMA8451Q.h"
+
+ #define MMA8451_I2C_ADDRESS (0x1d<<1)
+
+ int main(void) {
+
+ MMA8451Q acc(P_E25, P_E24, MMA8451_I2C_ADDRESS);
+ PwmOut rled(LED_RED);
+ PwmOut gled(LED_GREEN);
+ PwmOut bled(LED_BLUE);
+
+     while (true) {
+         rled = 1.0 - abs(acc.getAccX());
+         gled = 1.0 - abs(acc.getAccY());
+         bled = 1.0 - abs(acc.getAccZ());
+         wait(0.1);
+     }
+ }*/
