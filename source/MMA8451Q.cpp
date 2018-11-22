@@ -18,14 +18,12 @@
 
 #include "MMA8451Q.h"
 
-MMA8451Q::MMA8451Q(int addr) /*: m_addr(addr) */{// netreba PinName sda, PinName scl, m_i2c(sda, scl)
+MMA8451Q::MMA8451Q(int addr) : m_addr(addr) {// netreba PinName sda, PinName scl, m_i2c(sda, scl)
     // activate the peripheral
-	m_addr = addr;
-	PRINTF("%d zacal MMA8451Q\n",m_addr);
+	PRINTF("Initializing Accelerometer\n");
     uint8_t data[2] = {REG_CTRL_REG_1, 0x01};
     /*	write(data, 2);	*/
     writeRegs(data, 2);
-    PRINTF("sKONCIL MMA8451Q\n");
 }
 
 MMA8451Q::~MMA8451Q() {  }
@@ -70,7 +68,6 @@ int16_t MMA8451Q::getAccAxis(uint8_t addr) {
 void MMA8451Q::readRegs(int addr, uint8_t * data, int len) {
     //uint8_t t[1] = {addr};
     I2C_buss.read(m_addr, addr,data, len);
-    PRINTF("___%d\n",m_addr);
     //m_i2c.write(m_addr, t, 1, true); //treba prerobit
     //m_i2c.read(m_addr, (char *)data, len); //treba prerobit
 }

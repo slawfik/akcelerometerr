@@ -10,7 +10,6 @@ RM := rm -rf
 -include sources.mk
 -include utilities/subdir.mk
 -include startup/subdir.mk
--include source/MMA8451Q/subdir.mk
 -include source/subdir.mk
 -include drivers/subdir.mk
 -include board/subdir.mk
@@ -44,27 +43,28 @@ endif
 # Add inputs and outputs from these tool invocations to the build variables 
 
 # All Target
-all: ULOHA.axf
+all: MKL25Z128xxx4_Project_Akcelerometer.axf
 
 # Tool invocations
-ULOHA.axf: $(OBJS) $(USER_OBJS)
+MKL25Z128xxx4_Project_Akcelerometer.axf: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: MCU C++ Linker'
-	arm-none-eabi-c++ -nostdlib -Xlinker -Map="ULOHA.map" -Xlinker --gc-sections -Xlinker -print-memory-usage -mcpu=cortex-m0plus -mthumb -T ULOHA_Debug.ld -o "ULOHA.axf" $(OBJS) $(USER_OBJS) $(LIBS)
+	arm-none-eabi-c++ -nostdlib -Xlinker -Map="MKL25Z128xxx4_Project_Akcelerometer.map" -Xlinker --gc-sections -Xlinker -print-memory-usage -mcpu=cortex-m0plus -mthumb -T MKL25Z128xxx4_Project_Akcelerometer_Debug.ld -o "MKL25Z128xxx4_Project_Akcelerometer.axf" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 	$(MAKE) --no-print-directory post-build
 
 # Other Targets
 clean:
-	-$(RM) $(CC_DEPS)$(C++_DEPS)$(EXECUTABLES)$(C_UPPER_DEPS)$(CXX_DEPS)$(OBJS)$(CPP_DEPS)$(C_DEPS) ULOHA.axf
+	-$(RM) $(CC_DEPS)$(C++_DEPS)$(EXECUTABLES)$(C_UPPER_DEPS)$(CXX_DEPS)$(OBJS)$(CPP_DEPS)$(C_DEPS) MKL25Z128xxx4_Project_Akcelerometer.axf
 	-@echo ' '
 
 post-build:
 	-@echo 'Performing post-build steps'
-	-arm-none-eabi-size "ULOHA.axf"; # arm-none-eabi-objcopy -v -O binary "ULOHA.axf" "ULOHA.bin" ; # checksum -p MKL25Z128xxx4 -d "ULOHA.bin";
+	-arm-none-eabi-size "MKL25Z128xxx4_Project_Akcelerometer.axf"; # arm-none-eabi-objcopy -v -O binary "MKL25Z128xxx4_Project_Akcelerometer.axf" "MKL25Z128xxx4_Project_Akcelerometer.bin" ; # checksum -p MKL25Z128xxx4 -d "MKL25Z128xxx4_Project_Akcelerometer.bin";
 	-@echo ' '
 
-.PHONY: all clean dependents post-build
+.PHONY: all clean dependents
+.SECONDARY: post-build
 
 -include ../makefile.targets

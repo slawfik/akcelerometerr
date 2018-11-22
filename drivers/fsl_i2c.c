@@ -937,6 +937,7 @@ status_t I2C_MasterTransferBlocking(I2C_Type *base, i2c_master_transfer_t *xfer)
     if (xfer->flags & kI2C_TransferRepeatedStartFlag)
     {
         result = I2C_MasterRepeatedStart(base, xfer->slaveAddress, direction);
+
     }
     else /* For normal transfer, send start. */
     {

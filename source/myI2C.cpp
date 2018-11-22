@@ -9,10 +9,8 @@
 
 my_I2C::my_I2C() {
 	// TODO Auto-generated constructor stub
-	PRINTF("zacal my_I2c Q\n");
     I2C_MasterGetDefaultConfig(&masterConf);
     I2C_MasterInit(I2C0, &masterConf, CLOCK_GetFreq(I2C0_CLK_SRC));
-    PRINTF("skoncil my_I2c Q\n");
 }
 
 my_I2C::~my_I2C() {
@@ -24,13 +22,13 @@ void my_I2C::write( int addr_slave,  uint8_t* data, int len)	{
     memset(&masterXfer, 0, sizeof(masterXfer));
 
     masterXfer.slaveAddress = addr_slave;
-    masterXfer.direction = kI2C_Read;
+    masterXfer.direction = kI2C_Write;
     masterXfer.subaddress = data[0];
     masterXfer.subaddressSize = 1;
     masterXfer.data = &data[1];
     masterXfer.dataSize = len;
 
-    masterXfer.flags = kI2C_TransferDefaultFlag;PRINTF("pred endd write\n");
+    masterXfer.flags = kI2C_TransferDefaultFlag;
     I2C_MasterTransferBlocking(I2C0, &masterXfer);
     PRINTF("End write\n");
 }
@@ -40,7 +38,7 @@ void my_I2C::read( int addr_slave, int addrReg, uint8_t* data, int len) {
 	memset(&masterXfer, 0, sizeof(masterXfer));
 
 	masterXfer.slaveAddress = addr_slave;
-	masterXfer.direction = kI2C_Write;
+	masterXfer.direction = kI2C_Read;
 	masterXfer.subaddress = addrReg;
 	masterXfer.subaddressSize = 1;
 	masterXfer.data = data;

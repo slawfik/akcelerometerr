@@ -42,6 +42,14 @@
 /*
  * @brief   Application entry point.
  */
+volatile int in;
+
+void delay(int pom)	{
+	in = 0;
+	for(int i = 0;i<pom;i++)	{
+		in++;
+	}
+}
 
 int main(void) {
 
@@ -52,37 +60,34 @@ int main(void) {
   	/* Init FSL debug console. */
     BOARD_InitDebugConsole();
 
-    float a = 0.6;
+    float x = 0;
+    float y = 0;
+    float z = 0;
+    int xx,yy,zz;
     MMA8451Q acc(0x1d);
-    a = acc.getAccX();
-    PRINTF("Hello World tu je X=%d\n",(int)(a*100));
 
-    /* Force the counter to be placed into memory. */
-    volatile static int i = 0 ;
     /* Enter an infinite loop, just incrementing a counter. */
     while(1) {
-    	i++;
+        x = acc.getAccX();
+        y = acc.getAccY();
+        z = acc.getAccZ();
+        xx = (int)(x*100);
+        yy = (int)(y*100);
+        zz = (int)(z*100);
+
+        if(x < 0)
+        {
+        	xx = xx*(-1);
+        } else if(y < 0)
+        {
+        	yy = yy *(-1);
+        } else if(z < 0)
+        {
+        	zz = zz *(-1);
+        }
+        PRINTF("X = %d	Y = %d	Z = %d\n",xx,yy,zz);//tento printf nevie vypisovat znamienkový int
+        delay(2005000);
     }
     return 0 ;
 }
 
-/*
-#include "mbed.h"
- #include "MMA8451Q.h"
-
- #define MMA8451_I2C_ADDRESS (0x1d<<1)
-
- int main(void) {
-
- MMA8451Q acc(P_E25, P_E24, MMA8451_I2C_ADDRESS);
- PwmOut rled(LED_RED);
- PwmOut gled(LED_GREEN);
- PwmOut bled(LED_BLUE);
-
-     while (true) {
-         rled = 1.0 - abs(acc.getAccX());
-         gled = 1.0 - abs(acc.getAccY());
-         bled = 1.0 - abs(acc.getAccZ());
-         wait(0.1);
-     }
- }*/

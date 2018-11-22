@@ -27,7 +27,6 @@ SUBDIRS := \
 CMSIS \
 board \
 drivers \
-source/MMA8451Q \
 source \
 startup \
 utilities \

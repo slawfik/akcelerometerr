@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding= "UTF-8" ?>
-<configuration name="MKL25Z128xxx4" version="1.4" xsi:schemaLocation="http://mcuxpresso.nxp.com/XSD/mex_configuration_1.4 http://mcuxpresso.nxp.com/XSD/mex_configuration_1.4.xsd" uuid="f825af94-efd9-4407-abce-b75dadd885e9" xmlns="http://mcuxpresso.nxp.com/XSD/mex_configuration_1.4" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<configuration name="MKL25Z128xxx4" version="1.4" xsi:schemaLocation="http://mcuxpresso.nxp.com/XSD/mex_configuration_1.4 http://mcuxpresso.nxp.com/XSD/mex_configuration_1.4.xsd" uuid="6f9ee12b-702f-4c8f-b4f3-a8b045373600" xmlns="http://mcuxpresso.nxp.com/XSD/mex_configuration_1.4" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
    <common>
       <processor>MKL25Z128xxx4</processor>
       <package>MKL25Z128VLK4</package>
@@ -8,7 +8,7 @@
       <cores selected="core0">
          <core name="Cortex-M0P" id="core0" description="M0P core"/>
       </cores>
-      <description>Configuration imported from ULOHA</description>
+      <description>Configuration imported from MKL25Z128xxx4_Project_Akcelerometer</description>
    </common>
    <preferences>
       <validate_boot_init_only>true</validate_boot_init_only>
@@ -33,6 +33,11 @@
                         <data>true</data>
                      </feature>
                   </dependency>
+                  <dependency resourceType="Peripheral" resourceId="I2C0" description="Peripheral I2C0 is not initialized" problem_level="1" source="Pins:BOARD_InitPins">
+                     <feature name="initialized" evaluation="equal">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
                   <dependency resourceType="SWComponent" resourceId="platform.drivers.common" description="Pins initialization requires the COMMON Driver in the project." problem_level="2" source="Pins:BOARD_InitPins">
                      <feature name="enabled" evaluation="equal" configuration="core0">
                         <data>true</data>
@@ -43,74 +48,41 @@
                         <data>true</data>
                      </feature>
                   </dependency>
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.gpio" description="Pins initialization requires the GPIO Driver in the project." problem_level="2" source="Pins:BOARD_InitPins">
+                     <feature name="enabled" evaluation="equal" configuration="core0">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
                </dependencies>
                <pins>
                   <pin peripheral="UART0" signal="TX" pin_num="28" pin_signal="TSI0_CH3/PTA2/UART0_TX/TPM2_CH1"/>
                   <pin peripheral="UART0" signal="RX" pin_num="27" pin_signal="TSI0_CH2/PTA1/UART0_RX/TPM2_CH0"/>
                   <pin peripheral="GPIOB" signal="GPIO, 18" pin_num="53" pin_signal="TSI0_CH11/PTB18/TPM2_CH0"/>
-                  <pin peripheral="GPIOE" signal="GPIO, 0" pin_num="1" pin_signal="PTE0/UART1_TX/RTC_CLKOUT/CMP0_OUT/I2C1_SDA"/>
-                  <pin peripheral="GPIOE" signal="GPIO, 1" pin_num="2" pin_signal="PTE1/SPI1_MOSI/UART1_RX/SPI1_MISO/I2C1_SCL"/>
-                  <pin peripheral="GPIOE" signal="GPIO, 2" pin_num="3" pin_signal="PTE2/SPI1_SCK"/>
-                  <pin peripheral="GPIOE" signal="GPIO, 3" pin_num="4" pin_signal="PTE3/SPI1_MISO/SPI1_MOSI"/>
-                  <pin peripheral="GPIOE" signal="GPIO, 4" pin_num="5" pin_signal="PTE4/SPI1_PCS0"/>
-                  <pin peripheral="GPIOE" signal="GPIO, 5" pin_num="6" pin_signal="PTE5"/>
-                  <pin peripheral="GPIOE" signal="GPIO, 20" pin_num="13" pin_signal="ADC0_DP0/ADC0_SE0/PTE20/TPM1_CH0/UART0_TX"/>
-                  <pin peripheral="GPIOE" signal="GPIO, 21" pin_num="14" pin_signal="ADC0_DM0/ADC0_SE4a/PTE21/TPM1_CH1/UART0_RX"/>
-                  <pin peripheral="GPIOE" signal="GPIO, 22" pin_num="15" pin_signal="ADC0_DP3/ADC0_SE3/PTE22/TPM2_CH0/UART2_TX"/>
-                  <pin peripheral="GPIOE" signal="GPIO, 23" pin_num="16" pin_signal="ADC0_DM3/ADC0_SE7a/PTE23/TPM2_CH1/UART2_RX"/>
-                  <pin peripheral="GPIOE" signal="GPIO, 24" pin_num="24" pin_signal="PTE24/TPM0_CH0/I2C0_SCL"/>
-                  <pin peripheral="GPIOE" signal="GPIO, 25" pin_num="25" pin_signal="PTE25/TPM0_CH1/I2C0_SDA"/>
-                  <pin peripheral="GPIOE" signal="GPIO, 29" pin_num="21" pin_signal="CMP0_IN5/ADC0_SE4b/PTE29/TPM0_CH2/TPM_CLKIN0"/>
-                  <pin peripheral="GPIOE" signal="GPIO, 30" pin_num="22" pin_signal="DAC0_OUT/ADC0_SE23/CMP0_IN4/PTE30/TPM0_CH3/TPM_CLKIN1"/>
-                  <pin peripheral="GPIOE" signal="GPIO, 31" pin_num="23" pin_signal="PTE31/TPM0_CH4"/>
-                  <pin peripheral="GPIOB" signal="GPIO, 0" pin_num="43" pin_signal="ADC0_SE8/TSI0_CH0/PTB0/LLWU_P5/I2C0_SCL/TPM1_CH0"/>
-                  <pin peripheral="GPIOB" signal="GPIO, 1" pin_num="44" pin_signal="ADC0_SE9/TSI0_CH6/PTB1/I2C0_SDA/TPM1_CH1"/>
-                  <pin peripheral="GPIOB" signal="GPIO, 2" pin_num="45" pin_signal="ADC0_SE12/TSI0_CH7/PTB2/I2C0_SCL/TPM2_CH0"/>
-                  <pin peripheral="GPIOB" signal="GPIO, 3" pin_num="46" pin_signal="ADC0_SE13/TSI0_CH8/PTB3/I2C0_SDA/TPM2_CH1"/>
-                  <pin peripheral="GPIOB" signal="GPIO, 8" pin_num="47" pin_signal="PTB8/EXTRG_IN"/>
-                  <pin peripheral="GPIOB" signal="GPIO, 9" pin_num="48" pin_signal="PTB9"/>
-                  <pin peripheral="GPIOB" signal="GPIO, 10" pin_num="49" pin_signal="PTB10/SPI1_PCS0"/>
-                  <pin peripheral="GPIOB" signal="GPIO, 11" pin_num="50" pin_signal="PTB11/SPI1_SCK"/>
-                  <pin peripheral="GPIOB" signal="GPIO, 16" pin_num="51" pin_signal="TSI0_CH9/PTB16/SPI1_MOSI/UART0_RX/TPM_CLKIN0/SPI1_MISO"/>
-                  <pin peripheral="GPIOB" signal="GPIO, 17" pin_num="52" pin_signal="TSI0_CH10/PTB17/SPI1_MISO/UART0_TX/TPM_CLKIN1/SPI1_MOSI"/>
                   <pin peripheral="GPIOB" signal="GPIO, 19" pin_num="54" pin_signal="TSI0_CH12/PTB19/TPM2_CH1"/>
-                  <pin peripheral="GPIOA" signal="GPIO, 0" pin_num="26" pin_signal="TSI0_CH1/PTA0/TPM0_CH5/SWD_CLK"/>
-                  <pin peripheral="GPIOA" signal="GPIO, 3" pin_num="29" pin_signal="TSI0_CH4/PTA3/I2C1_SCL/TPM0_CH0/SWD_DIO"/>
-                  <pin peripheral="GPIOA" signal="GPIO, 4" pin_num="30" pin_signal="TSI0_CH5/PTA4/I2C1_SDA/TPM0_CH1/NMI_b"/>
-                  <pin peripheral="GPIOA" signal="GPIO, 5" pin_num="31" pin_signal="PTA5/USB_CLKIN/TPM0_CH2"/>
-                  <pin peripheral="GPIOA" signal="GPIO, 12" pin_num="32" pin_signal="PTA12/TPM1_CH0"/>
-                  <pin peripheral="GPIOA" signal="GPIO, 13" pin_num="33" pin_signal="PTA13/TPM1_CH1"/>
-                  <pin peripheral="GPIOA" signal="GPIO, 14" pin_num="34" pin_signal="PTA14/SPI0_PCS0/UART0_TX"/>
-                  <pin peripheral="GPIOA" signal="GPIO, 15" pin_num="35" pin_signal="PTA15/SPI0_SCK/UART0_RX"/>
-                  <pin peripheral="GPIOA" signal="GPIO, 16" pin_num="36" pin_signal="PTA16/SPI0_MOSI/SPI0_MISO"/>
-                  <pin peripheral="GPIOA" signal="GPIO, 17" pin_num="37" pin_signal="PTA17/SPI0_MISO/SPI0_MOSI"/>
-                  <pin peripheral="GPIOA" signal="GPIO, 18" pin_num="40" pin_signal="EXTAL0/PTA18/UART1_RX/TPM_CLKIN0"/>
-                  <pin peripheral="GPIOA" signal="GPIO, 19" pin_num="41" pin_signal="XTAL0/PTA19/UART1_TX/TPM_CLKIN1/LPTMR0_ALT1"/>
-                  <pin peripheral="GPIOA" signal="GPIO, 20" pin_num="42" pin_signal="PTA20/RESET_b"/>
-                  <pin peripheral="GPIOD" signal="GPIO, 0" pin_num="73" pin_signal="PTD0/SPI0_PCS0/TPM0_CH0"/>
                   <pin peripheral="GPIOD" signal="GPIO, 1" pin_num="74" pin_signal="ADC0_SE5b/PTD1/SPI0_SCK/TPM0_CH1"/>
-                  <pin peripheral="GPIOD" signal="GPIO, 2" pin_num="75" pin_signal="PTD2/SPI0_MOSI/UART2_RX/TPM0_CH2/SPI0_MISO"/>
-                  <pin peripheral="GPIOD" signal="GPIO, 3" pin_num="76" pin_signal="PTD3/SPI0_MISO/UART2_TX/TPM0_CH3/SPI0_MOSI"/>
-                  <pin peripheral="GPIOD" signal="GPIO, 4" pin_num="77" pin_signal="PTD4/LLWU_P14/SPI1_PCS0/UART2_RX/TPM0_CH4"/>
-                  <pin peripheral="GPIOD" signal="GPIO, 5" pin_num="78" pin_signal="ADC0_SE6b/PTD5/SPI1_SCK/UART2_TX/TPM0_CH5"/>
-                  <pin peripheral="GPIOD" signal="GPIO, 6" pin_num="79" pin_signal="ADC0_SE7b/PTD6/LLWU_P15/SPI1_MOSI/UART0_RX/SPI1_MISO"/>
-                  <pin peripheral="GPIOD" signal="GPIO, 7" pin_num="80" pin_signal="PTD7/SPI1_MISO/UART0_TX/SPI1_MOSI"/>
-                  <pin peripheral="GPIOC" signal="GPIO, 0" pin_num="55" pin_signal="ADC0_SE14/TSI0_CH13/PTC0/EXTRG_IN/CMP0_OUT"/>
-                  <pin peripheral="GPIOC" signal="GPIO, 1" pin_num="56" pin_signal="ADC0_SE15/TSI0_CH14/PTC1/LLWU_P6/RTC_CLKIN/I2C1_SCL/TPM0_CH0"/>
-                  <pin peripheral="GPIOC" signal="GPIO, 2" pin_num="57" pin_signal="ADC0_SE11/TSI0_CH15/PTC2/I2C1_SDA/TPM0_CH1"/>
-                  <pin peripheral="GPIOC" signal="GPIO, 3" pin_num="58" pin_signal="PTC3/LLWU_P7/UART1_RX/TPM0_CH2/CLKOUTa"/>
-                  <pin peripheral="GPIOC" signal="GPIO, 4" pin_num="61" pin_signal="PTC4/LLWU_P8/SPI0_PCS0/UART1_TX/TPM0_CH3"/>
-                  <pin peripheral="GPIOC" signal="GPIO, 5" pin_num="62" pin_signal="PTC5/LLWU_P9/SPI0_SCK/LPTMR0_ALT2/CMP0_OUT"/>
-                  <pin peripheral="GPIOC" signal="GPIO, 6" pin_num="63" pin_signal="CMP0_IN0/PTC6/LLWU_P10/SPI0_MOSI/EXTRG_IN/SPI0_MISO"/>
-                  <pin peripheral="GPIOC" signal="GPIO, 7" pin_num="64" pin_signal="CMP0_IN1/PTC7/SPI0_MISO/SPI0_MOSI"/>
-                  <pin peripheral="GPIOC" signal="GPIO, 8" pin_num="65" pin_signal="CMP0_IN2/PTC8/I2C0_SCL/TPM0_CH4"/>
-                  <pin peripheral="GPIOC" signal="GPIO, 9" pin_num="66" pin_signal="CMP0_IN3/PTC9/I2C0_SDA/TPM0_CH5"/>
-                  <pin peripheral="GPIOC" signal="GPIO, 10" pin_num="67" pin_signal="PTC10/I2C1_SCL"/>
-                  <pin peripheral="GPIOC" signal="GPIO, 11" pin_num="68" pin_signal="PTC11/I2C1_SDA"/>
-                  <pin peripheral="GPIOC" signal="GPIO, 12" pin_num="69" pin_signal="PTC12/TPM_CLKIN0"/>
-                  <pin peripheral="GPIOC" signal="GPIO, 13" pin_num="70" pin_signal="PTC13/TPM_CLKIN1"/>
-                  <pin peripheral="GPIOC" signal="GPIO, 16" pin_num="71" pin_signal="PTC16"/>
-                  <pin peripheral="GPIOC" signal="GPIO, 17" pin_num="72" pin_signal="PTC17"/>
+                  <pin peripheral="I2C0" signal="SCL" pin_num="24" pin_signal="PTE24/TPM0_CH0/I2C0_SCL">
+                     <pin_features>
+                        <pin_feature name="pull_select" value="up"/>
+                        <pin_feature name="pull_enable" value="enable"/>
+                     </pin_features>
+                  </pin>
+                  <pin peripheral="I2C0" signal="SDA" pin_num="25" pin_signal="PTE25/TPM0_CH1/I2C0_SDA">
+                     <pin_features>
+                        <pin_feature name="pull_enable" value="enable"/>
+                     </pin_features>
+                  </pin>
+                  <pin peripheral="GPIOA" signal="GPIO, 14" pin_num="34" pin_signal="PTA14/SPI0_PCS0/UART0_TX">
+                     <pin_features>
+                        <pin_feature name="direction" value="INPUT"/>
+                        <pin_feature name="pull_select" value="no_init"/>
+                     </pin_features>
+                  </pin>
+                  <pin peripheral="GPIOA" signal="GPIO, 15" pin_num="35" pin_signal="PTA15/SPI0_SCK/UART0_RX">
+                     <pin_features>
+                        <pin_feature name="direction" value="INPUT"/>
+                        <pin_feature name="pull_select" value="no_init"/>
+                     </pin_features>
+                  </pin>
                </pins>
             </function>
          </functions_list>
@@ -228,7 +200,7 @@
             <processor_version>N/A</processor_version>
          </peripherals_profile>
          <functional_groups>
-            <functional_group name="BOARD_InitPeripherals" uuid="41e16e76-f1dd-4636-a8e4-96476dde8c52" called_from_default_init="true" id_prefix="" core="">
+            <functional_group name="BOARD_InitPeripherals" uuid="ddaa306e-9e96-4ed5-9556-f778accdaa77" called_from_default_init="true" id_prefix="" core="">
                <description></description>
                <options/>
                <dependencies/>

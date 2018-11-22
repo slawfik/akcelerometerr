@@ -47,39 +47,30 @@ void BOARD_InitBootPins(void);
 #define BOARD_INITPINS_LED_RED_PIN 18U    /*!<@brief PORTB pin index: 18 */
                                           /* @} */
 
+/*! @name PORTB19 (number 54), D3[4]/LEDRGB_GREEN
+  @{ */
+#define BOARD_INITPINS_LED_GREEN_GPIO GPIOB /*!<@brief GPIO device name: GPIOB */
+#define BOARD_INITPINS_LED_GREEN_PORT PORTB /*!<@brief PORT device name: PORTB */
+#define BOARD_INITPINS_LED_GREEN_PIN 19U    /*!<@brief PORTB pin index: 19 */
+                                            /* @} */
+
+/*! @name PORTD1 (number 74), J2[12]/D3[3]/D13/LEDRGB_BLUE
+  @{ */
+#define BOARD_INITPINS_LED_BLUE_GPIO GPIOD /*!<@brief GPIO device name: GPIOD */
+#define BOARD_INITPINS_LED_BLUE_PORT PORTD /*!<@brief PORT device name: PORTD */
+#define BOARD_INITPINS_LED_BLUE_PIN 1U     /*!<@brief PORTD pin index: 1 */
+                                           /* @} */
+
 /*! @name PORTE24 (number 24), U7[4]/I2C0_SCL
   @{ */
-#define BOARD_INITPINS_ACCEL_SCL_GPIO GPIOE /*!<@brief GPIO device name: GPIOE */
 #define BOARD_INITPINS_ACCEL_SCL_PORT PORTE /*!<@brief PORT device name: PORTE */
 #define BOARD_INITPINS_ACCEL_SCL_PIN 24U    /*!<@brief PORTE pin index: 24 */
                                             /* @} */
 
 /*! @name PORTE25 (number 25), U7[6]/I2C0_SDA
   @{ */
-#define BOARD_INITPINS_ACCEL_SDA_GPIO GPIOE /*!<@brief GPIO device name: GPIOE */
 #define BOARD_INITPINS_ACCEL_SDA_PORT PORTE /*!<@brief PORT device name: PORTE */
 #define BOARD_INITPINS_ACCEL_SDA_PIN 25U    /*!<@brief PORTE pin index: 25 */
-                                            /* @} */
-
-/*! @name PORTB16 (number 51), TSI0_CH9
-  @{ */
-#define BOARD_INITPINS_TSI_ELECTRODE_1_GPIO GPIOB /*!<@brief GPIO device name: GPIOB */
-#define BOARD_INITPINS_TSI_ELECTRODE_1_PORT PORTB /*!<@brief PORT device name: PORTB */
-#define BOARD_INITPINS_TSI_ELECTRODE_1_PIN 16U    /*!<@brief PORTB pin index: 16 */
-                                                  /* @} */
-
-/*! @name PORTB17 (number 52), TSI0_CH10
-  @{ */
-#define BOARD_INITPINS_TSI_ELECTRODE_2_GPIO GPIOB /*!<@brief GPIO device name: GPIOB */
-#define BOARD_INITPINS_TSI_ELECTRODE_2_PORT PORTB /*!<@brief PORT device name: PORTB */
-#define BOARD_INITPINS_TSI_ELECTRODE_2_PIN 17U    /*!<@brief PORTB pin index: 17 */
-                                                  /* @} */
-
-/*! @name PORTB19 (number 54), D3[4]/LEDRGB_GREEN
-  @{ */
-#define BOARD_INITPINS_LED_GREEN_GPIO GPIOB /*!<@brief GPIO device name: GPIOB */
-#define BOARD_INITPINS_LED_GREEN_PORT PORTB /*!<@brief PORT device name: PORTB */
-#define BOARD_INITPINS_LED_GREEN_PIN 19U    /*!<@brief PORTB pin index: 19 */
                                             /* @} */
 
 /*! @name PORTA14 (number 34), U7[11]/INT1_ACCEL
@@ -95,27 +86,6 @@ void BOARD_InitBootPins(void);
 #define BOARD_INITPINS_ACCEL_INT2_PORT PORTA /*!<@brief PORT device name: PORTA */
 #define BOARD_INITPINS_ACCEL_INT2_PIN 15U    /*!<@brief PORTA pin index: 15 */
                                              /* @} */
-
-/*! @name PORTA18 (number 40), Y1[3]/EXTAL
-  @{ */
-#define BOARD_INITPINS_EXTAL0_GPIO GPIOA /*!<@brief GPIO device name: GPIOA */
-#define BOARD_INITPINS_EXTAL0_PORT PORTA /*!<@brief PORT device name: PORTA */
-#define BOARD_INITPINS_EXTAL0_PIN 18U    /*!<@brief PORTA pin index: 18 */
-                                         /* @} */
-
-/*! @name PORTA19 (number 41), Y1[1]/XTAL
-  @{ */
-#define BOARD_INITPINS_XTAL0_GPIO GPIOA /*!<@brief GPIO device name: GPIOA */
-#define BOARD_INITPINS_XTAL0_PORT PORTA /*!<@brief PORT device name: PORTA */
-#define BOARD_INITPINS_XTAL0_PIN 19U    /*!<@brief PORTA pin index: 19 */
-                                        /* @} */
-
-/*! @name PORTD1 (number 74), J2[12]/D3[3]/D13/LEDRGB_BLUE
-  @{ */
-#define BOARD_INITPINS_LED_BLUE_GPIO GPIOD /*!<@brief GPIO device name: GPIOD */
-#define BOARD_INITPINS_LED_BLUE_PORT PORTD /*!<@brief PORT device name: PORTD */
-#define BOARD_INITPINS_LED_BLUE_PIN 1U     /*!<@brief PORTD pin index: 1 */
-                                           /* @} */
 
 /*!
  * @brief Configures pin routing and optionally pin electrical features.
