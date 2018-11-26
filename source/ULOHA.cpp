@@ -37,56 +37,95 @@
 #include "pin_mux.h"
 #include "clock_config.h"
 #include "fsl_debug_console.h"
+#include "fsl_pit.h"
 #include "MMA8451Q.h"
 
-/*
- * @brief   Application entry point.
- */
-volatile int in;
+#define FF_FAL_REG ((volatile uint8_t*) 0x15)
+#define PERIODA_VZORKOVANIA 800000
 
-void delay(int pom)	{
-	in = 0;
-	for(int i = 0;i<pom;i++)	{
-		in++;
+//#define PIT_IRQ_ID PIT_IRQn
+#define PIT_SOURCE_CLOCK CLOCK_GetFreq(kCLOCK_BusClk)
+
+
+
+volatile bool pitFlag = false;
+
+extern "C" void PIT_IRQHandler(void)
+	{
+		/* Clear interrupt flag.*/
+		PIT_ClearStatusFlags(PIT, kPIT_Chnl_0, kPIT_TimerFlag);
+		pitFlag = true;
 	}
+
+void initPit(uint64_t pa_usec){
+	pit_config_t pitConfig;
+    PIT_GetDefaultConfig(&pitConfig);
+
+    PIT_Init(PIT, &pitConfig);
+
+    PIT_SetTimerPeriod(PIT, kPIT_Chnl_0, USEC_TO_COUNT(pa_usec, PIT_SOURCE_CLOCK));
+
+    PIT_EnableInterrupts(PIT, kPIT_Chnl_0, kPIT_TimerInterruptEnable);
+
+    EnableIRQ(PIT_IRQn);
+
+    PRINTF("\r\nStarting channel No.0 ...");
+    PIT_StartTimer(PIT, kPIT_Chnl_0);
+}
+
+/*	deltaT - perioda vzorkovania*/
+void hornopriepust_Filter(float *value,float deltaT,float* axisValue)	{
+	int fc = 5;
+	float alfa = 1/(2*3.14*deltaT*fc+1);
+	value[0] = alfa * value[0] + (alfa*(axisValue[0] - axisValue[3]));
+	value[1] = alfa * value[1] + (alfa*(axisValue[1] - axisValue[4]));
+	value[2] = alfa * value[2] + (alfa*(axisValue[2] - axisValue[5]));
+}
+
+void dolnopriepust_Filter(float *value,float deltaT,float* axisValue)	{
+	int fc = 5;
+	float alfa = (2*3.14*deltaT*fc)/(1+(2*3.14*deltaT*fc));
+	value[0] = alfa * axisValue[0] + (1-alfa) * value[0];
+	value[1] = alfa * axisValue[1] + (1-alfa) * value[0];
+	value[2] = alfa * axisValue[2] + (1-alfa) * value[0];
 }
 
 int main(void) {
-
   	/* Init board hardware. */
     BOARD_InitBootPins();
     BOARD_InitBootClocks();
     BOARD_InitBootPeripherals();
-  	/* Init FSL debug console. */
     BOARD_InitDebugConsole();
 
-    float x = 0;
-    float y = 0;
-    float z = 0;
-    int xx,yy,zz;
+    initPit(PERIODA_VZORKOVANIA);
+
+    LED_BLUE_INIT(LOGIC_LED_ON);
+    float out_HPF[3] = {0,0,0};
+    float out_DPF[3] = {0,0,0};
+    float _hodnotyOs[6] = {0,0,0,0,0,0};
+    int pom1 ,pom2;
     MMA8451Q acc(0x1d);
 
-    /* Enter an infinite loop, just incrementing a counter. */
     while(1) {
-        x = acc.getAccX();
-        y = acc.getAccY();
-        z = acc.getAccZ();
-        xx = (int)(x*100);
-        yy = (int)(y*100);
-        zz = (int)(z*100);
+    	if (true == pitFlag)    {
+    			LED_BLUE_ON();
+				_hodnotyOs[0] = acc.getAccX();
+    			LED_BLUE_OFF();
+				_hodnotyOs[1] = acc.getAccY();
+				_hodnotyOs[2] = acc.getAccZ();
+				hornopriepust_Filter(out_HPF,(float)PERIODA_VZORKOVANIA/1000000,_hodnotyOs);
+				dolnopriepust_Filter(out_DPF,(float)PERIODA_VZORKOVANIA/1000000,_hodnotyOs);
+				_hodnotyOs[3] = _hodnotyOs[0];
+				_hodnotyOs[4] = _hodnotyOs[1];
+				_hodnotyOs[5] = _hodnotyOs[2];
 
-        if(x < 0)
-        {
-        	xx = xx*(-1);
-        } else if(y < 0)
-        {
-        	yy = yy *(-1);
-        } else if(z < 0)
-        {
-        	zz = zz *(-1);
-        }
-        PRINTF("X = %d	Y = %d	Z = %d\n",xx,yy,zz);//tento printf nevie vypisovat znamienkový int
-        delay(2005000);
+				pom1 = (int)(out_HPF[0]*1000); pom2 = (int)(_hodnotyOs[0]*1000);
+				PRINTF("X=%d --> X-hornoPF_X=%d\n",pom2,pom2-pom1);
+				//PRINTF("HORNO_PRIEPUST_F:\nX = %d	Y = %d	Z = %d\n",(int)(out_HPF[0]*1000),(int)(out_HPF[1]*1000),(int)(out_HPF[2]*1000));
+				PRINTF("DOLNO_PRIEPUST_F:\nX = %d	Y = %d	Z = %d\n\n",(int)(out_DPF[0]*1000),(int)(out_DPF[1]*1000),(int)(out_DPF[2]*1000));
+				pitFlag = false;
+    	}
+
     }
     return 0 ;
 }
