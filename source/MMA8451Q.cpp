@@ -22,7 +22,6 @@ MMA8451Q::MMA8451Q(int addr) : m_addr(addr) {// netreba PinName sda, PinName scl
     // activate the peripheral
 	PRINTF("Initializing Accelerometer\n");
     uint8_t data[2] = {REG_CTRL_REG_1, 0x01};
-    /*	write(data, 2);	*/
     writeRegs(data, 2);
 }
 
@@ -50,6 +49,13 @@ void MMA8451Q::getAccAllAxis(float * res) {
     res[0] = getAccX();
     res[1] = getAccY();
     res[2] = getAccZ();
+}
+
+void MMA8451Q::getNaklon(float * vstupneData,float * out_Naklon)	{
+	out_Naklon[0] = vstupneData[0]/sqrt((vstupneData[1]*vstupneData[1]+vstupneData[2]*vstupneData[2]));
+	out_Naklon[1] = vstupneData[1]/sqrt((vstupneData[0]*vstupneData[0]+vstupneData[2]*vstupneData[2]));
+	out_Naklon[0] = atan(out_Naklon[0]);
+	out_Naklon[1] = atan(out_Naklon[1]);
 }
 
 int16_t MMA8451Q::getAccAxis(uint8_t addr) {

@@ -20,6 +20,7 @@
 #define MMA8451Q_H
 
 #include "myI2C.h"
+#include <math.h>
 
 #define REG_WHO_AM_I      0x0D //VRACIA ID NEJAKOHO OBVODU
 #define REG_CTRL_REG_1    0x2A
@@ -76,7 +77,7 @@ public:
    * @param res array where acceleration data will be stored
    */
   void getAccAllAxis(float * res);
-
+  void getNaklon(float * vstupneData,float * out_Naklon);
 private:
   int m_addr;
   my_I2C I2C_buss;
