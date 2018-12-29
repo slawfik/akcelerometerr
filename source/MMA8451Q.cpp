@@ -56,6 +56,15 @@ void MMA8451Q::getNaklon(float * vstupneData,float * out_Naklon)	{
 	out_Naklon[1] = vstupneData[1]/sqrt((vstupneData[0]*vstupneData[0]+vstupneData[2]*vstupneData[2]));
 	out_Naklon[0] = atan(out_Naklon[0]);
 	out_Naklon[1] = atan(out_Naklon[1]);
+
+	//	PRINTF("nakl_1=%d\n\r",(int)out_Naklon[0]);
+	//	PRINTF("naklonn_1000=%d\n\r",(int)(1000*out_Naklon[0]));*/
+	/*	if(vstupneData[2] < 0 && vstupneData[0] > 0)	{
+			out_Naklon[0] = 1.571 + (1.571 - out_Naklon[0]);
+		} else if (vstupneData[2] < 0 && vstupneData[0] < 0) {
+			out_Naklon[0] = -1.571 - (1.571 + out_Naklon[0]);
+		}
+*/
 }
 
 int16_t MMA8451Q::getAccAxis(uint8_t addr) {
