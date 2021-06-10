@@ -1,6 +1,7 @@
 /**
  * @file    ULOHA.cpp
  * @brief   TOMAS SLAVKOVSKY.
+ 	Test pre noe branch
  */
 
 #include "pomocneFunkcie.h"
